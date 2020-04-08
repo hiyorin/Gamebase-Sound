@@ -1,6 +1,9 @@
 {
-    "name": "[PackageName].Editor",
+    "name": "Gamebase-Sound.Editor",
     "references": [
+        "GUID:e3f169174713e4a62a157888ee293ba0",
+        "GUID:48f37a7b1d57c4be8be5bc225fbbf17d",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
     ],
     "includePlatforms": [
         "Editor"

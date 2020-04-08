@@ -1,15 +1,16 @@
 {
-  "name": "your.package.name",
-  "displayName": "[your package display name]",
+  "name": "com.gamebase.sound",
+  "displayName": "Gamebase-Sound",
   "version": "1.0.0",
   "unity": "2018.3",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "[your github repository url]"
+    "url": "https://github.com/hiyorin/Gamebase-Sound.git"
   },
-  "src": "Packages/[your package name]",
+  "src": "Packages/com.gamebase.sound",
   "author": "hiyorin <ponkotsu.hiyorin@gmail.com> (https://github.com/hiyorin)",
   "dependencies": {
+    "com.gamebase.core": "1.0.0"
   }
 }
