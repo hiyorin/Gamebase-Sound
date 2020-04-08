@@ -1,0 +1,2 @@
+# UnityPackageManagerTemplate
+Template for developing UnityPackageManager

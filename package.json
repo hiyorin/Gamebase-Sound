@@ -1,0 +1,15 @@
+{
+  "name": "your.package.name",
+  "displayName": "[your package display name]",
+  "version": "1.0.0",
+  "unity": "2018.3",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "[your github repository url]"
+  },
+  "src": "Packages/[your package name]",
+  "author": "hiyorin <ponkotsu.hiyorin@gmail.com> (https://github.com/hiyorin)",
+  "dependencies": {
+  }
+}
