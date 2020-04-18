@@ -11,6 +11,24 @@
   "src": "Packages/com.gamebase.sound",
   "author": "hiyorin <ponkotsu.hiyorin@gmail.com> (https://github.com/hiyorin)",
   "dependencies": {
-    "com.gamebase.core": "1.0.0"
-  }
+    "com.gamebase.core": "1.0.0",
+    "com.gamebase.loader": "1.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Unity",
+      "description": "Unity Sample",
+      "path": "Samples/Unity"
+    },
+    {
+      "displayName": "ADX2",
+      "description": "ADX2 Sample",
+      "path": "Samples/ADX2"
+    },
+    {
+      "displayName": "MasterAudio",
+      "description": "MasterAudio Sample",
+      "path": "Samples/MasterAudio"
+    }
+  ]
 }

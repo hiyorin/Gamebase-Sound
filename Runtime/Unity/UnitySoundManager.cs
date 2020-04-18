@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 using UniRx.Async;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -11,6 +12,7 @@ using Object = UnityEngine.Object;
 
 namespace Gamebase.Sound.Unity
 {
+    [PublicAPI]
     public sealed class UnitySoundManager : ISoundManager, IInitializable, IDisposable
     {
         private sealed class SoundData

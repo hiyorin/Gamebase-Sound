@@ -55,7 +55,7 @@ Gamebase integration with NodeCanvas is disabled by default. To enable, you must
 ## CRI ADX2 Integration
 [CRI ADX2](https://game.criware.jp/products/adx2/) is the best audio middleware for cross-platform development. For more details see the [CRI ADX2 Manual](https://game.criware.jp/manual/unity_plugin/jpn/contents/index.html).  
 
-Gamebase integration with CRI ADX2 is disabled by default. To enable, you must add the define `GAMEBASE_ADD_CRIADX2` to your project, which you can do by selecting Edit -> Project Settings -> Player and then adding `GAMEBASE_ADD_CRIADX2` in the `Scripting Define Symbols` section.  
+Gamebase integration with CRI ADX2 is disabled by default. To enable, you must add the define `GAMEBASE_ADD_ADX2` to your project, which you can do by selecting Edit -> Project Settings -> Player and then adding `GAMEBASE_ADD_ADX2` in the `Scripting Define Symbols` section.  
 
 <br><br><br><br>
 ## Master Audio Integration
