@@ -2,19 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
+using Zenject;
 
 namespace Gamebase.Sound.Unity
 {
     public sealed class UnitySoundSource : MonoBehaviour
     {
         private readonly List<AudioSource> sources = new List<AudioSource>();
-
-        public int PlaybackNumber => sources.Count;
+        
+        private readonly HashSet<AudioClip> playQueue = new HashSet<AudioClip>();
 
         private void Update()
         {
+            // Play
+            foreach (var clip in playQueue)
+            {
+                if (!PlayInternal(clip, false))
+                    break;
+            }
+            playQueue.Clear();
+
             foreach (var source in sources)
             {
                 if (!source.enabled)
@@ -25,7 +35,12 @@ namespace Gamebase.Sound.Unity
             }
         }
 
-        public void Initialize(int playbackNumber, AudioMixerGroup group)
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+
+        private void Initialize(int playbackNumber, AudioMixerGroup group)
         {
             for (var i = 0; i < playbackNumber; i++)
             {
@@ -37,22 +52,43 @@ namespace Gamebase.Sound.Unity
             }
         }
 
-        public void Play(AudioClip clip, bool loop)
+        private void Dispose()
         {
-            if (clip == null)
-                throw new ArgumentNullException();
-            
+            foreach (var audioSource in sources)
+            {
+                if (audioSource.isActiveAndEnabled)
+                    DestroyImmediate(audioSource);
+            }
+
+            sources.Clear();
+        }
+
+        private bool PlayInternal(AudioClip clip, bool loop)
+        {
             var source = sources.FirstOrDefault(x => !x.enabled);
-            if (source == null)
+            if (source == default)
             {
                 Debug.unityLogger.LogWarning(nameof(UnitySoundSource), $"Play limit reached, {clip.name}");
-                return;
+                return false;
             }
 
             source.enabled = true;
             source.loop = loop;
             source.clip = clip;
             source.Play();
+
+            return true;
+        }
+        
+        public void Play(AudioClip clip, bool loop)
+        {
+            if (clip == null)
+                throw new ArgumentNullException();
+
+            if (loop)
+                PlayInternal(clip, true);
+            else
+                playQueue.Add(clip);
         }
 
         public void PlayCrossFade(AudioClip clip, bool loop)
@@ -100,6 +136,20 @@ namespace Gamebase.Sound.Unity
             foreach (var source in sources.Where(x => x.enabled))
             {
                 source.UnPause();
+            }
+        }
+
+        [PublicAPI]
+        public sealed class Pool : MonoMemoryPool<int, AudioMixerGroup, UnitySoundSource>
+        {
+            protected override void Reinitialize(int playbackNumber, AudioMixerGroup group, UnitySoundSource item)
+            {
+                item.Initialize(playbackNumber, group);
+            }
+
+            protected override void OnDespawned(UnitySoundSource item)
+            {
+                item.Dispose();
             }
         }
     }

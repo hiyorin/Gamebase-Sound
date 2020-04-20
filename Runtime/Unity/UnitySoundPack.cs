@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gamebase.Sound.Unity
 {
-    [Serializable]
+    [CreateAssetMenu(fileName = "UnitySoundPack", menuName = "Gamebase-Sound/UnitySoundPack")]
     public sealed class UnitySoundPack : ScriptableObject
     {
         [SerializeField] private AudioClip[] bgmClips = { };

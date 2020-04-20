@@ -1,24 +1,7 @@
-using System.Collections.Generic;
-
 namespace Gamebase.Sound
 {
     public interface ISoundPlayer
     {
-        /// <summary>
-        /// 使用可能フラグ
-        /// </summary>
-        bool IsValid { get; }
-        
-        /// <summary>
-        /// サウンドファイル名
-        /// </summary>
-        string FileName { get; }
-        
-        /// <summary>
-        /// 収録されているサウンド一覧
-        /// </summary>
-        IEnumerable<string> SoundNames { get; }
-
         /// <summary>
         /// 再生
         /// </summary>

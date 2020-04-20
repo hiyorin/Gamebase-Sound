@@ -1,14 +1,20 @@
+using JetBrains.Annotations;
 using UnityEngine;
-using Zenject;
 
 namespace Gamebase.Sound.Unity
 {
+    [PublicAPI]
     public sealed class UnitySoundVolumeController : ISoundVolumeController
     {
         private const float MaxDb = 0.0f;
         
-        [Inject] private UnitySoundSettings settings = null;
+        private readonly UnitySoundSettings settings;
 
+        public UnitySoundVolumeController(UnitySoundSettings settings)
+        {
+            this.settings = settings;
+        }
+        
         private float GetVolume(string name)
         {
             if (!settings.AudioMixer.GetFloat(name, out var volume))

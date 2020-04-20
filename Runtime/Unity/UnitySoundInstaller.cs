@@ -10,8 +10,6 @@ namespace Gamebase.Sound.Unity
 
         [SerializeField] private UnitySoundSettings settings = default;
 
-        [SerializeField] private UnitySoundPack[] preloadPacks = { };
-
         public override void InstallBindings()
         {
             var subContainer = Container.CreateSubContainer();
@@ -30,14 +28,18 @@ namespace Gamebase.Sound.Unity
 
         private void InstallSubContainer(DiContainer subContainer)
         {
+            // Managers
             subContainer.Bind<UnitySoundManager>().AsSingle();
             subContainer.Bind<UnitySoundVolumeController>().AsSingle();
 
-            // subContainer.BindInterfacesTo<SoundConfigRepository>().AsSingle();
-            // subContainer.BindInterfacesTo<SoundConfigUseCase>().AsSingle();
+            // Settings
             subContainer.BindInstance(generalSettings).AsSingle();
             subContainer.BindInstance(settings).AsSingle();
-            subContainer.BindInstance(preloadPacks).AsSingle();
+            
+            // Factories
+            subContainer.BindMemoryPool<UnitySoundSource, UnitySoundSource.Pool>()
+                .FromNewComponentOnNewPrefabResource(nameof(UnitySoundSource));
+            subContainer.BindMemoryPool<UnitySoundPlayer, UnitySoundPlayer.Pool>();
         }
     }
 }

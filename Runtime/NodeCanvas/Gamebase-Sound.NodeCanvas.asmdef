@@ -1,0 +1,22 @@
+{
+    "name": "Gamebase-Sound.NodeCanvas",
+    "references": [
+        "GUID:2459b26c9ca8240c8a077ef715f55797",
+        "GUID:e3f169174713e4a62a157888ee293ba0",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:b134867f3cd9e37428b652f97bf28b72"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "GAMEBASE_ADD_NODECANVAS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
