@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f57d4460d09b492e892d1a8099a94610, type: 3}
+  m_Name: UnitySoundPack
+  m_EditorClassIdentifier: 
+  bgmClips:
+  - {fileID: 8300000, guid: 2f9487a680cfb48189a7e7f3365a3241, type: 3}
+  seClips:
+  - {fileID: 8300000, guid: 86b5fbd2ba8f74e4ead48f8c18d337d3, type: 3}
+  voiceClips: []

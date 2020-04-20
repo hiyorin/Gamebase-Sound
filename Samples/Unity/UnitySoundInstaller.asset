@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15018ef2e4f9542e99cb8e1441bd4adf, type: 3}
+  m_Name: UnitySoundInstaller
+  m_EditorClassIdentifier: 
+  generalSettings:
+    defaultVolume:
+      Master: 1
+      Bgm: 1
+      Se: 1
+      Voice: 1
+  settings:
+    audioMixer: {fileID: 24100000, guid: a761133c0e83e40d3ae0868d8e6b8f89, type: 2}
+    thresholdVolume: -40
+    master:
+      audioMixerGroup: {fileID: 24300002, guid: a761133c0e83e40d3ae0868d8e6b8f89,
+        type: 2}
+      volumeName: MasterVolume
+      playbackNumber: 1
+    bgm:
+      audioMixerGroup: {fileID: 6042101432482647094, guid: a761133c0e83e40d3ae0868d8e6b8f89,
+        type: 2}
+      volumeName: BgmVolume
+      playbackNumber: 2
+    se:
+      audioMixerGroup: {fileID: 4057712402619212152, guid: a761133c0e83e40d3ae0868d8e6b8f89,
+        type: 2}
+      volumeName: SeVolume
+      playbackNumber: 3
+    voice:
+      audioMixerGroup: {fileID: 5821343834096529116, guid: a761133c0e83e40d3ae0868d8e6b8f89,
+        type: 2}
+      volumeName: VoiceVolume
+      playbackNumber: 3

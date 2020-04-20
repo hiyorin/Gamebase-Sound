@@ -1,3 +1,4 @@
+#if false
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -91,3 +92,4 @@ namespace Gamebase.Sound.Editor
         }
     }
 }
+#endif
