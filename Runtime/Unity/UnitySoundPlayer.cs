@@ -37,6 +37,8 @@ namespace Gamebase.Sound.Unity
         
         #region ISoundPlayer implementation
 
+        string ISoundPlayer.FileName => soundPack.name;
+        
         void ISoundPlayer.Play(string soundName, bool loop)
         {
             AudioClip clip = null;

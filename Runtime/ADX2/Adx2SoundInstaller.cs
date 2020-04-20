@@ -1,11 +1,12 @@
 #if GAMEBASE_ADD_ADX2
 using System;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using Zenject;
 
 namespace Gamebase.Sound.Adx2
 {
-    [CreateAssetMenu(fileName = "Adx2SoundInstaller", menuName = "Installers/Adx2SoundInstaller")]
+    [CreateAssetMenu(fileName = "Adx2SoundInstaller", menuName = "Installers/Gamebase/Adx2SoundInstaller")]
     public sealed class Adx2SoundInstaller : ScriptableObjectInstaller<Adx2SoundInstaller>
     {
         [SerializeField] private SoundSettings generalSettings = null;
@@ -18,14 +19,34 @@ namespace Gamebase.Sound.Adx2
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<Adx2SoundManager>().AsSingle();
-            Container.BindInterfacesTo<Adx2SoundVolumeController>().AsSingle();
-            // Container.BindInterfacesTo<SoundConfigRepository>().AsSingle();
-            // Container.BindInterfacesTo<SoundConfigUseCase>().AsSingle();
-            Container.BindInstance(generalSettings).AsSingle();
-            Container.BindInstance(adx2Settings).AsSingle();
-            Container.BindInstance(categoryVolumeSettings).AsSingle();
-            Container.BindInstance(criInitializer).AsSingle();
+            var subContainer = Container.CreateSubContainer();
+            InstallSubContainer(subContainer);
+            
+            Container.BindInterfacesTo<Adx2SoundManager>()
+                .FromSubContainerResolve()
+                .ByInstance(subContainer)
+                .AsSingle();
+            
+            Container.BindInterfacesTo<Adx2SoundVolumeController>()
+                .FromSubContainerResolve()
+                .ByInstance(subContainer)
+                .AsSingle();
+        }
+
+        private void InstallSubContainer(DiContainer subContainer)
+        {
+            subContainer.Bind<Adx2SoundManager>().AsSingle();
+            subContainer.Bind<Adx2SoundVolumeController>().AsSingle();
+            
+            subContainer.BindInstance(generalSettings).AsSingle();
+            subContainer.BindInstance(adx2Settings).AsSingle();
+            subContainer.BindInstance(categoryVolumeSettings).AsSingle();
+            subContainer.Bind<CriAtom>().FromResources("CRIAtom").AsSingle();
+            subContainer.BindInstance(criInitializer).AsSingle();
+            
+            // Factories
+            subContainer.BindMemoryPool<Adx2SoundPlayer, Adx2SoundPlayer.Pool>()
+                .FromNewComponentOnNewPrefabResource(nameof(Adx2SoundPlayer));
         }
     }
 
