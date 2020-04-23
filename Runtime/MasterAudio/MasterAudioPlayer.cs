@@ -1,61 +1,55 @@
 #if GAMEBASE_ADD_MASTERAUDIO
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DarkTonic.MasterAudio;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
-using Sound = DarkTonic.MasterAudio.MasterAudio;
+using Zenject;
+using MA = DarkTonic.MasterAudio.MasterAudio;
 
 namespace Gamebase.Sound.MasterAudio
 {
     [RequireComponent(typeof(PlaylistController))]
-    internal class MasterAudioPlayer : MonoBehaviour, ISoundPlayer, IDisposable
+    internal class MasterAudioPlayer : MonoBehaviour, ISoundPlayer
     {
         private string fileName;
 
-        private bool isInitialized = false;
-
-        private DynamicSoundGroupCreator owner;
+        private DynamicSoundGroupCreator sound;
         
         private PlaylistController controller;
         
-        private readonly List<string> playlistNames = new List<string>();
+        public List<string> playlistNames = new List<string>();
         
-        private readonly List<string> groupMixerNames = new List<string>();
+        public List<string> groupMixerNames = new List<string>();
         
         private void Awake()
         {
             controller = GetComponent<PlaylistController>();
         }
         
-        public void Initialize(string fileName, DynamicSoundGroupCreator owner, AudioMixerGroup mixerChannel)
+        private void Initialize(string fileName, DynamicSoundGroupCreator sound, AudioMixerGroup mixerChannel)
         {
             this.fileName = fileName;
-            this.owner = owner;
+            this.sound = Instantiate(sound, transform);
 
             controller.RouteToMixerChannel(mixerChannel);
             
-            playlistNames.AddRange(owner.musicPlaylists.Select(x => x.playlistName));
-            groupMixerNames.AddRange(owner.GroupsToCreate.Select(x => x.name));
-            
-            isInitialized = true;
+            playlistNames.AddRange(sound.musicPlaylists.Select(x => x.playlistName));
+            groupMixerNames.AddRange(sound.GroupsToCreate.Select(x => x.name));
         }
 
-        public void Dispose()
+        private void Dispose()
         {
-            isInitialized = false;
+            Destroy(sound);
+            sound = null;
         }
         
         #region ISoundPlayer implementaion
+ 
+        string ISoundPlayer.FileName => fileName;
 
-        public bool IsValid => isInitialized;
-        
-        public string FileName => fileName;
-
-        public IEnumerable<string> SoundNames => playlistNames.Union(groupMixerNames);
-
-        public void Play(string soundName, bool loop)
+        void ISoundPlayer.Play(string soundName, bool loop)
         {
             if (playlistNames.Contains(soundName))
             {
@@ -64,26 +58,40 @@ namespace Gamebase.Sound.MasterAudio
             }
             else
             {
-                Sound.PlaySoundAndForget(soundName);
+                MA.PlaySoundAndForget(soundName);
             }
         }
 
-        public void Pause()
+        void ISoundPlayer.Pause()
         {
             controller.PausePlaylist();
         }
-
-        public void Resume()
+        
+        void ISoundPlayer.Resume()
         {
             controller.UnpausePlaylist();
         }
 
-        public void Stop()
+        void ISoundPlayer.Stop()
         {
             controller.StopPlaylist();
         }
         
         #endregion
+
+        [PublicAPI]
+        public sealed class Pool : MonoMemoryPool<string, DynamicSoundGroupCreator, AudioMixerGroup, MasterAudioPlayer>
+        {
+            protected override void Reinitialize(string fileName, DynamicSoundGroupCreator sound, AudioMixerGroup mixerChannel, MasterAudioPlayer item)
+            {
+                item.Initialize(fileName, sound, mixerChannel);
+            }
+
+            protected override void OnDespawned(MasterAudioPlayer item)
+            {
+                item.Dispose();
+            }
+        }
     }
 }
 #endif
