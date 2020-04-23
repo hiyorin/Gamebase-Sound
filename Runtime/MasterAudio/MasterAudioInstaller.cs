@@ -1,14 +1,14 @@
 #if GAMEBASE_ADD_MASTERAUDIO
 using UnityEngine;
 using Zenject;
-using Sound = DarkTonic.MasterAudio.MasterAudio;
+using MA = DarkTonic.MasterAudio.MasterAudio;
 
 namespace Gamebase.Sound.MasterAudio
 {
-    [CreateAssetMenu(fileName = "MasterAudioInstaller", menuName = "Installers/Gamebase-Extensions/MasterAudioInstaller")]
+    [CreateAssetMenu(fileName = "MasterAudioInstaller", menuName = "Installers/Gamebase/MasterAudioInstaller")]
     public sealed class MasterAudioInstaller : ScriptableObjectInstaller<MasterAudioInstaller>
     {
-        [SerializeField] private Sound masterAudio = default;
+        [SerializeField] private MA masterAudio = default;
         
         [SerializeField] private SoundSettings generalSettings = default;
         
@@ -38,6 +38,10 @@ namespace Gamebase.Sound.MasterAudio
             Container.BindInstance(masterAudio).AsSingle();
             Container.BindInstance(generalSettings).AsSingle();
             Container.BindInstance(settings).AsSingle();
+            
+            // Factories
+            Container.BindMemoryPool<MasterAudioPlayer, MasterAudioPlayer.Pool>()
+                .FromNewComponentOnNewPrefabResource(nameof(MasterAudioPlayer));
         }
     }
 }
