@@ -2,6 +2,8 @@ namespace Gamebase.Sound
 {
     public interface ISoundPlayer
     {
+        string FileName { get; }
+        
         /// <summary>
         /// 再生
         /// </summary>

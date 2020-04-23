@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c352d68576c495f9464c91f02461d6, type: 3}
+  m_Name: Adx2SoundInstaller
+  m_EditorClassIdentifier: 
+  generalSettings:
+    defaultVolume:
+      Master: 1
+      Bgm: 1
+      Se: 1
+      Voice: 1
+  adx2Settings:
+    defaultAcfReference:
+      m_AssetGUID: 32a3681c8cb04473692f5c27eefbcfff
+    preloadCueSheetReference:
+      cueSheetName: 
+      acbReference:
+        m_AssetGUID: 
+        CueName: 
+      awbReference:
+        m_AssetGUID: 
+  categoryVolumeSettings:
+    masterName: Master
+    bgmName: BGM
+    seName: SE
+    voiceName: Voice
+  criInitializer: {fileID: 4786683964986192868, guid: d9485924c56ae4fef84dfaa306e4dc77,
+    type: 3}

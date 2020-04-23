@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Gamebase.Loader.Asset;
 using Gamebase.Utilities;
 using UniRx.Async;
 using UnityEngine;
@@ -12,14 +13,17 @@ namespace Gamebase.Sound.Adx2
 {
     public sealed class Adx2SoundLoader
     {
+        private readonly IAssetLoader assetLoader;
+        
         private readonly CacheDirectory cache;
 
         private TextAsset acbAsset;
 
         private TextAsset awbAsset;
 
-        public Adx2SoundLoader(CacheDirectory cache)
+        public Adx2SoundLoader(IAssetLoader assetLoader, CacheDirectory cache)
         {
+            this.assetLoader = assetLoader;
             this.cache = cache;
         }
         
@@ -49,24 +53,15 @@ namespace Gamebase.Sound.Adx2
 
         private async UniTask<byte[]> LoadAcb(object key)
         {
-            var operation = Addressables.LoadAssetAsync<TextAsset>(key);
-            await operation.Task;
-            if (!operation.IsValid())
-            {
-                Debug.unityLogger.LogError(nameof(Adx2SoundLoader), "Load acb Error.");
-                throw operation.OperationException;
-            }
-            
-            byte[] acbBytes = operation.Result.bytes;
-            Addressables.Release(operation);
-
+            var handle = await assetLoader.Load<TextAsset>(key);
+            byte[] acbBytes = handle.Result.bytes;
+            assetLoader.Unload(handle);
             return acbBytes;
         }
 
         private async UniTask<string> LoadAwb(object key)
         {
-            IList<string> downloadFiles;
-            if (AddressableUtility.FindAssetBundlePath(key, out downloadFiles))
+            if (AddressableUtility.FindAssetBundlePath(key, out var downloadFiles))
             {
                 var srcPath = downloadFiles.FirstOrDefault();
                 var srcFileName = Path.GetFileName(srcPath);
@@ -74,13 +69,9 @@ namespace Gamebase.Sound.Adx2
                 var dstPath = cache.FullPath(srcFileName);
                 if (!cache.Exists(srcFileName))
                 {
-                    var operation = Addressables.LoadAssetAsync<TextAsset>(key);
-                    await operation.Task;
-                    if (operation.IsValid())
-                    {
-                        await cache.SaveAsync(srcFileName, operation.Result.bytes);
-                        Addressables.Release(operation);
-                    }
+                    var handle = await assetLoader.Load<TextAsset>(key);
+                    await cache.SaveAsync(srcFileName, handle.Result.bytes);
+                    Addressables.Release(handle);
                 }
 
                 return dstPath;
