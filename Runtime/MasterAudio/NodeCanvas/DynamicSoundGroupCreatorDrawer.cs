@@ -1,21 +1,20 @@
-#if GAMEBASE_ADD_NODECANVAS
-using Gamebase.Sound.Unity;
+#if GAMEBASE_ADD_MASTERAUDIO && GAMEBASE_ADD_NODECANVAS
 using JetBrains.Annotations;
 using ParadoxNotion.Design;
 using UnityEditor;
 using UnityEngine;
 
-namespace Gamebase.Sound.NodeCanvas
+namespace Gamebase.Sound.MasterAudio.NodeCanvas
 {
     [PublicAPI]
-    public sealed class UnitySoundPackDrawer : ObjectDrawer<UnitySoundPackReference>
+    public sealed class DynamicSoundGroupCreatorDrawer : ObjectDrawer<DynamicSoundGroupCreatorReference>
     {
         private sealed class Dummy : ScriptableObject
         {
-            public UnitySoundPackReference Reference;
+            public DynamicSoundGroupCreatorReference Reference;
         }
         
-        public override UnitySoundPackReference OnGUI(GUIContent content, UnitySoundPackReference instance)
+        public override DynamicSoundGroupCreatorReference OnGUI(GUIContent content, DynamicSoundGroupCreatorReference instance)
         {
             var dummy = ScriptableObject.CreateInstance<Dummy>();
             dummy.Reference = instance;

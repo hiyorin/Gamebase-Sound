@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Gamebase.Sound.MasterAudio
+namespace Gamebase.Sound.MasterAudio.Internal
 {
     [PublicAPI]
     internal sealed class MasterAudioVolumeController : ISoundVolumeController

@@ -1,18 +1,18 @@
-#if GAMEBASE_ADD_NODECANVAS
-using Gamebase.Sound.Unity;
+#if GAMEBASE_ADD_MASTERAUDIO && GAMEBASE_ADD_NODECANVAS
+using Gamebase.Sound.NodeCanvas;
 using JetBrains.Annotations;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UniRx.Async;
 
-namespace Gamebase.Sound.NodeCanvas.Actions
+namespace Gamebase.Sound.MasterAudio.NodeCanvas.Actions
 {
     [PublicAPI]
-    [Name("Load Sound (UnitySoundPack)")]
+    [Name("Load Sound (DynamicSoundGroupCreator)")]
     [Category("✫ Gamebase/Sound")]
-    public sealed class LoadSoundUnitySoundPack : ActionTask<SoundTaskManager>
+    public sealed class LoadSoundDynamicSoundGroupCreator : ActionTask<SoundTaskManager>
     {
-        [RequiredField] public UnitySoundPackReference reference = default;
+        [RequiredField] public DynamicSoundGroupCreatorReference reference = default;
 
         [BlackboardOnly] public BBParameter<ISoundPlayer> saveAs = default;
         

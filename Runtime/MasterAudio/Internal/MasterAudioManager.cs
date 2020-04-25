@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using MA = DarkTonic.MasterAudio.MasterAudio;
 
-namespace Gamebase.Sound.MasterAudio
+namespace Gamebase.Sound.MasterAudio.Internal
 {
     [PublicAPI]
     internal sealed class MasterAudioManager : ISoundManager
