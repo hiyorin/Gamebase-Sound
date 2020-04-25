@@ -1,6 +1,5 @@
 #if GAMEBASE_ADD_ADX2
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Gamebase.Loader.Asset;

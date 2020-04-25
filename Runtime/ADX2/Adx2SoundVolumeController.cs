@@ -1,11 +1,17 @@
 #if GAMEBASE_ADD_ADX2
-using Zenject;
+using JetBrains.Annotations;
 
 namespace Gamebase.Sound.Adx2
 {
-    public sealed class Adx2SoundVolumeController : ISoundVolumeController
+    [PublicAPI]
+    internal sealed class Adx2SoundVolumeController : ISoundVolumeController
     {
-        [Inject] private Adx2CategoryVolumeSettings settings = null;
+        private readonly Adx2CategoryVolumeSettings settings;
+
+        public Adx2SoundVolumeController(Adx2CategoryVolumeSettings settings)
+        {
+            this.settings = settings;
+        }
         
         #region ISoundVolumeController implementation
         

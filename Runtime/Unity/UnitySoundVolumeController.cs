@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Gamebase.Sound.Unity
 {
     [PublicAPI]
-    public sealed class UnitySoundVolumeController : ISoundVolumeController
+    internal sealed class UnitySoundVolumeController : ISoundVolumeController
     {
         private const float MaxDb = 0.0f;
         

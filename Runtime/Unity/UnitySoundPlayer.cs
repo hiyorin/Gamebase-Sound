@@ -8,7 +8,7 @@ using Zenject;
 namespace Gamebase.Sound.Unity
 {
     [PublicAPI]
-    public sealed class UnitySoundPlayer : ISoundPlayer
+    internal sealed class UnitySoundPlayer : ISoundPlayer
     {
         private UnitySoundPack soundPack;
         

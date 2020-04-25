@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Gamebase.Sound.Unity
 {
     [PublicAPI]
-    public sealed class UnitySoundManager : ISoundManager
+    internal sealed class UnitySoundManager : ISoundManager
     {
         private readonly UnitySoundSource.Pool soundSourceFactory;
 

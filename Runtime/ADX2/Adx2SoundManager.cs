@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Gamebase.Sound.Adx2
 {
     [PublicAPI]
-    public sealed class Adx2SoundManager : ISoundManager
+    internal sealed class Adx2SoundManager : ISoundManager
     {
         private class CueSheetData
         {

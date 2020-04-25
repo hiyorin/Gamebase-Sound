@@ -1,9 +1,11 @@
 #if GAMEBASE_ADD_MASTERAUDIO
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
 namespace Gamebase.Sound.MasterAudio
 {
+    [PublicAPI]
     internal sealed class MasterAudioVolumeController : ISoundVolumeController
     {
         private const float MaxDb = 0.0f;
