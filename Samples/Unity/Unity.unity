@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 511520811}
   - component: {fileID: 511520810}
   - component: {fileID: 511520809}
+  - component: {fileID: 511520812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -334,6 +335,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &511520812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511520808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &697140144
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,7 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"actions":[{"$type":"Gamebase.Sound.NodeCanvas.Actions.InitializeSoundManager"},{"path":{"_value":"UnitySoundPack"},"saveAs":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"$type":"Gamebase.Sound.NodeCanvas.Actions.LoadSound"},{"soundPlayer":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"soundName":{"_value":"sample-bgm"},"loop":{"_value":true},"$type":"Gamebase.Sound.NodeCanvas.Actions.PlaySound"}]},"_position":{"x":462.0,"y":297.0},"$type":"NodeCanvas.StateMachines.ActionState"},{"_position":{"x":198.0,"y":175.0},"$type":"NodeCanvas.StateMachines.AnyState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[{"soundPlayer":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"soundName":{"_value":"sample-se"},"loop":{},"$type":"Gamebase.Sound.NodeCanvas.Actions.PlaySound"}]},"_position":{"x":127.0,"y":340.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"}],"connections":[{"_condition":{"button":{"_value":1},"$type":"NodeCanvas.Tasks.Conditions.ButtonClicked"},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"actions":[{"$type":"Gamebase.Sound.NodeCanvas.Actions.InitializeSoundManager"},{"reference":{"m_AssetGUID":"6ff9f5b92549649cf8ef740f24f27c3c"},"saveAs":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"$type":"Gamebase.Sound.NodeCanvas.Actions.LoadSoundUnitySoundPack"},{"path":{"_value":"UnitySoundPack"},"saveAs":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"_isDisabled":true,"$type":"Gamebase.Sound.NodeCanvas.Actions.LoadSound"},{"soundPlayer":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"soundName":{"_value":"sample-bgm"},"loop":{"_value":true},"$type":"Gamebase.Sound.NodeCanvas.Actions.PlaySound"}]},"_position":{"x":459.0,"y":297.0},"$type":"NodeCanvas.StateMachines.ActionState"},{"_position":{"x":198.0,"y":175.0},"$type":"NodeCanvas.StateMachines.AnyState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[{"soundPlayer":{"_name":"SoundPlayer","_targetVariableID":"582bd176-195b-43b1-bd51-5fd8c4c9fbf8"},"soundName":{"_value":"sample-se"},"loop":{},"$type":"Gamebase.Sound.NodeCanvas.Actions.PlaySound"}]},"_position":{"x":127.0,"y":340.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"}],"connections":[{"_condition":{"button":{"_value":1},"$type":"NodeCanvas.Tasks.Conditions.ButtonClicked"},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences:
   - {fileID: 0}
   - {fileID: 697140146}
@@ -857,7 +889,7 @@ MonoBehaviour:
     _version: 3.02
     _category: 
     _comments: 
-    _translation: {x: 61, y: 153}
+    _translation: {x: -57, y: 56}
     _zoomFactor: 1
   _firstActivation: 0
   _enableAction: 0

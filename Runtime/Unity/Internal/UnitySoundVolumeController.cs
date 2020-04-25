@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Gamebase.Sound.Unity
+namespace Gamebase.Sound.Unity.Internal
 {
     [PublicAPI]
     internal sealed class UnitySoundVolumeController : ISoundVolumeController

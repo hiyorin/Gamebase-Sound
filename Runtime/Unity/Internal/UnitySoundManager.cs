@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UniRx.Async;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Gamebase.Sound.Unity
+namespace Gamebase.Sound.Unity.Internal
 {
     [PublicAPI]
     internal sealed class UnitySoundManager : ISoundManager

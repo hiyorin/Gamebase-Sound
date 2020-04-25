@@ -34,9 +34,11 @@ namespace Gamebase.Sound.Adx2
 
         private void InstallSubContainer(DiContainer subContainer)
         {
+            // Managers
             subContainer.Bind<Adx2SoundManager>().AsSingle();
             subContainer.Bind<Adx2SoundVolumeController>().AsSingle();
             
+            // Settings
             subContainer.BindInstance(generalSettings).AsSingle();
             subContainer.BindInstance(adx2Settings).AsSingle();
             subContainer.BindInstance(categoryVolumeSettings).AsSingle();
