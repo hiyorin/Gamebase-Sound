@@ -1,5 +1,3 @@
-#if false
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,8 +15,8 @@ namespace Gamebase.Sound.Editor
         }
 
         private ISoundManager soundManager;
-        
-        private IList<string> cacheInfos = new List<string>();
+
+        private ISoundVolumeController volumeController;
         
         private void OnEnable()
         {
@@ -31,7 +29,7 @@ namespace Gamebase.Sound.Editor
             SceneManager.sceneLoaded -= OnSceneLoaded;
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
         }
-        
+
         private void OnPlayModeStateChanged(PlayModeStateChange change)
         {
             switch (change)
@@ -41,55 +39,64 @@ namespace Gamebase.Sound.Editor
                     break;
                 case PlayModeStateChange.ExitingPlayMode:
                     soundManager = null;
+                    volumeController = null;
                     break;
-            }   
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SearchComponents();
         }
-        
+
         private void SearchComponents()
         {
             foreach (var context in FindObjectsOfType<SceneContext>())
             {
-                soundManager = context.Container.TryResolve<ISoundManager>();
-                if (soundManager != null)
+                if (soundManager == null)
+                    soundManager = context.Container.TryResolve<ISoundManager>();
+
+                if (volumeController == null)
+                    volumeController = context.Container.TryResolve<ISoundVolumeController>();
+                
+                if (soundManager != null && volumeController != null)
                     break;
             }
         }
-        
+
         private void OnGUI()
         {
-            if (soundManager != null)
+            if (volumeController != null)
             {
-                cacheInfos.Clear();
-                soundManager.GetCacheInfos(ref cacheInfos);
-
-                foreach (var cacheInfo in cacheInfos)
-                {
-                    var lines = cacheInfo.Split('\n');
-                    EditorGUILayout.LabelField(lines[0]);
-                    EditorGUI.indentLevel++;
-                    for (var i = 1; i < lines.Length; i++)
-                    {
-                        var keyValue = lines[i].Split(':');
-                        if (keyValue.Length >= 2)
-                            EditorGUILayout.TextField(keyValue[0].Trim(), keyValue[1].Trim());
-                        else if (!string.IsNullOrEmpty(keyValue[0]))
-                            EditorGUILayout.TextField(keyValue[0].Trim());
-                        else
-                            EditorGUILayout.Space();
-                    }
-                    EditorGUI.indentLevel--;
-                }
+                EditorGUILayout.LabelField("Volume");
+                EditorGUI.indentLevel++;
+                volumeController.MasterVolume = EditorGUILayout.Slider("Master", volumeController.MasterVolume, 0.0f, 1.0f);
+                volumeController.BgmVolume = EditorGUILayout.Slider("BGM", volumeController.BgmVolume, 0.0f, 1.0f);
+                volumeController.SeVolume = EditorGUILayout.Slider("SE", volumeController.SeVolume, 0.0f, 1.0f);
+                volumeController.VoiceVolume = EditorGUILayout.Slider("Voice", volumeController.VoiceVolume, 0.0f, 1.0f);
+                EditorGUI.indentLevel--;
             }
             else
             {
-                EditorGUILayout.LabelField("Not found.");
+                EditorGUILayout.LabelField("Not Found ISoundVolumeController.");
+            }
+            
+            EditorGUILayout.Space();
+
+            if (soundManager != null)
+            {
+                EditorGUILayout.LabelField("Loaded Sounds");
+                EditorGUI.indentLevel++;
+                foreach (var info in soundManager.GetInfos())
+                {
+                    EditorGUILayout.LabelField(info);
+                }
+                EditorGUI.indentLevel--;
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Not Found ISoundManager.");
             }
         }
     }
 }
-#endif

@@ -1,5 +1,6 @@
 #if GAMEBASE_ADD_MASTERAUDIO
 using System.Collections.Generic;
+using System.Linq;
 using DarkTonic.MasterAudio;
 using Gamebase.Loader.Asset;
 using JetBrains.Annotations;
@@ -76,7 +77,9 @@ namespace Gamebase.Sound.MasterAudio.Internal
             assetLoader.Unload(sound);
             soundPacks.Remove(player);
         }
-        
+
+        IEnumerable<string> ISoundManager.GetInfos() => soundPacks.Keys.Select(x => x.FileName);
+
         #endregion
     }
 }

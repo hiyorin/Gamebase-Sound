@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Gamebase.Loader.Asset;
 using JetBrains.Annotations;
 using UniRx.Async;
@@ -70,7 +71,9 @@ namespace Gamebase.Sound.Unity.Internal
                 assetLoader.Unload(handle);
             }
         }
-        
+
+        IEnumerable<string> ISoundManager.GetInfos() => soundPacks.Keys.Select(x => x.FileName);
+
         #endregion
     }
 }
