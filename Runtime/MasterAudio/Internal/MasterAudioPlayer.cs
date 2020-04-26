@@ -8,7 +8,7 @@ using UnityEngine.Audio;
 using Zenject;
 using MA = DarkTonic.MasterAudio.MasterAudio;
 
-namespace Gamebase.Sound.MasterAudio
+namespace Gamebase.Sound.MasterAudio.Internal
 {
     [RequireComponent(typeof(PlaylistController))]
     internal class MasterAudioPlayer : MonoBehaviour, ISoundPlayer

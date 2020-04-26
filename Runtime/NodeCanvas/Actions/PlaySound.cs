@@ -1,3 +1,4 @@
+#if GAMEBASE_ADD_NODECANVAS
 using JetBrains.Annotations;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
@@ -22,3 +23,4 @@ namespace Gamebase.Sound.NodeCanvas.Actions
         }
     }
 }
+#endif

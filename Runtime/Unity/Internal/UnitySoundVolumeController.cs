@@ -1,19 +1,24 @@
-#if GAMEBASE_ADD_MASTERAUDIO
+using JetBrains.Annotations;
 using UnityEngine;
-using Zenject;
 
-namespace Gamebase.Sound.MasterAudio
+namespace Gamebase.Sound.Unity.Internal
 {
-    internal sealed class MasterAudioVolumeController : ISoundVolumeController
+    [PublicAPI]
+    internal sealed class UnitySoundVolumeController : ISoundVolumeController
     {
         private const float MaxDb = 0.0f;
         
-        [Inject] private MasterAudioSettings settings = null;
+        private readonly UnitySoundSettings settings;
 
+        public UnitySoundVolumeController(UnitySoundSettings settings)
+        {
+            this.settings = settings;
+        }
+        
         private float GetVolume(string name)
         {
             if (!settings.AudioMixer.GetFloat(name, out var volume))
-                Debug.unityLogger.LogError(nameof(MasterAudioVolumeController), $"{nameof(GetVolume)} failed. {name} is not found. {volume}");
+                Debug.unityLogger.LogError(nameof(UnitySoundVolumeController), $"{nameof(GetVolume)} failed. {name} is not found. {volume}");
             return Mathf.InverseLerp(settings.ThresholdVolume, MaxDb, volume);
         }
 
@@ -21,7 +26,7 @@ namespace Gamebase.Sound.MasterAudio
         {
             var volume = Mathf.Lerp(settings.ThresholdVolume, MaxDb, Mathf.Clamp01(value));
             if (!settings.AudioMixer.SetFloat(name, volume))
-                Debug.unityLogger.LogError(nameof(MasterAudioVolumeController), $"{nameof(SetVolume)} failed. {name} is not found. {volume}");
+                Debug.unityLogger.LogError(nameof(UnitySoundVolumeController), $"{nameof(SetVolume)} failed. {name} is not found. {volume}");
         }
         
         #region ISoundVolumeController implementation
@@ -61,4 +66,3 @@ namespace Gamebase.Sound.MasterAudio
         #endregion
     }
 }
-#endif

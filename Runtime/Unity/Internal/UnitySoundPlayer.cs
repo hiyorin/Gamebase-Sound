@@ -5,10 +5,10 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Gamebase.Sound.Unity
+namespace Gamebase.Sound.Unity.Internal
 {
     [PublicAPI]
-    public sealed class UnitySoundPlayer : ISoundPlayer
+    internal sealed class UnitySoundPlayer : ISoundPlayer
     {
         private UnitySoundPack soundPack;
         

@@ -1,6 +1,5 @@
 #if GAMEBASE_ADD_ADX2
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Gamebase.Loader.Asset;
@@ -9,56 +8,55 @@ using UniRx.Async;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Gamebase.Sound.Adx2
+namespace Gamebase.Sound.Adx2.Internal
 {
-    public sealed class Adx2SoundLoader
+    internal sealed class Adx2SoundLoader
     {
         private readonly IAssetLoader assetLoader;
         
         private readonly CacheDirectory cache;
-
-        private TextAsset acbAsset;
-
-        private TextAsset awbAsset;
 
         public Adx2SoundLoader(IAssetLoader assetLoader, CacheDirectory cache)
         {
             this.assetLoader = assetLoader;
             this.cache = cache;
         }
-        
-        public async UniTask<CriAtomCueSheet> Load(string cueSheetName, object acbKey, object awbKey)
+
+        public async UniTask<CriAtomCueSheet> Load(object key)
         {
-            if (string.IsNullOrEmpty(cueSheetName) || acbKey == null)
+            if (key == default)
                 throw new ArgumentNullException();
 
-            // CriAtomに追加済みなら再利用
-            CriAtomCueSheet cueSheet = CriAtom.GetCueSheet(cueSheetName);
-            if (cueSheet != null)
-                return cueSheet;
-            
-            byte[] acbBytes = await LoadAcb(acbKey);
-
-            string awbFilePath = null;
-            if (awbKey != null)
+            // acb
+            var acbAsset = await assetLoader.Load<TextAsset>(key);
+            var cueSheetName = Path.GetFileName(acbAsset.Result.name);
+            var cueSheet = CriAtom.GetCueSheet(cueSheetName);
+            if (cueSheet != default)
             {
-                awbFilePath = await LoadAwb(awbKey);
+                assetLoader.Unload(acbAsset);
+                return cueSheet;
             }
+            var acbBytes = acbAsset.Result.bytes;
+            
+            // awb
+            var awbAssetName = Path.ChangeExtension(acbAsset.Result.name, "awb");
+            var awbFilePath = await LoadAwb(awbAssetName);
+            assetLoader.Unload(acbAsset);
 
+            // cue sheet
             cueSheet = CriAtom.AddCueSheetAsync(cueSheetName, acbBytes, awbFilePath);
             await UniTask.WaitUntil(() => !cueSheet.IsLoading);
-
             return cueSheet;
         }
 
-        private async UniTask<byte[]> LoadAcb(object key)
+        public void Unload(CriAtomCueSheet cueSheet)
         {
-            var handle = await assetLoader.Load<TextAsset>(key);
-            byte[] acbBytes = handle.Result.bytes;
-            assetLoader.Unload(handle);
-            return acbBytes;
+            if (cueSheet == default)
+                throw new ArgumentNullException();
+            
+            CriAtom.RemoveCueSheet(cueSheet.name);
         }
-
+        
         private async UniTask<string> LoadAwb(object key)
         {
             if (AddressableUtility.FindAssetBundlePath(key, out var downloadFiles))

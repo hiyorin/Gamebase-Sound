@@ -1,15 +1,15 @@
+#if GAMEBASE_ADD_ADX2
 using System.Collections.Generic;
-using System.IO;
 using Gamebase.Loader.Asset;
 using Gamebase.Utilities;
 using JetBrains.Annotations;
 using UniRx.Async;
 using UnityEngine;
 
-namespace Gamebase.Sound.Adx2
+namespace Gamebase.Sound.Adx2.Internal
 {
     [PublicAPI]
-    public sealed class Adx2SoundManager : ISoundManager
+    internal sealed class Adx2SoundManager : ISoundManager
     {
         private class CueSheetData
         {
@@ -24,14 +24,14 @@ namespace Gamebase.Sound.Adx2
         private readonly Adx2SoundPlayer.Pool playerFactory;
         
         private readonly Adx2Settings settings;
-        
-        private readonly IAssetLoader assetLoader;
 
         private readonly CacheDirectory cacheDirectory = new CacheDirectory("Sound");
         
         private readonly Dictionary<string, CueSheetData> cueSheets = new Dictionary<string, CueSheetData>();
 
         private readonly List<Adx2SoundPlayer> players = new List<Adx2SoundPlayer>();
+
+        private readonly Adx2SoundLoader soundLoader;
         
         private CriAtom criAtom;
 
@@ -48,7 +48,8 @@ namespace Gamebase.Sound.Adx2
             this.criWareInitializerPrefab = criWareInitializerPrefab;
             this.playerFactory = playerFactory;
             this.settings = settings;
-            this.assetLoader = assetLoader;
+            
+            soundLoader = new Adx2SoundLoader(assetLoader, cacheDirectory);
         }
         
         private async UniTask LoadAcfFile(AcfAssetReference reference)
@@ -87,9 +88,9 @@ namespace Gamebase.Sound.Adx2
             }
             players.Clear();
             
-            foreach (var cueSheet in cueSheets.Keys)
+            foreach (var cueSheetData in cueSheets.Values)
             {
-                CriAtom.RemoveCueSheet(cueSheet);
+                soundLoader.Unload(cueSheetData.CueSheet);
             }
             cueSheets.Clear();
 
@@ -98,28 +99,22 @@ namespace Gamebase.Sound.Adx2
 
         async UniTask<ISoundPlayer> ISoundManager.Load(string path)
         {
-            var directory = Path.GetDirectoryName(path);
-            var cueSheetName = Path.GetFileNameWithoutExtension(path);
-            var acbFileName = $"{cueSheetName}.acb";
-            var awbFileName = $"{cueSheetName}.awb";
-            
-            if (!cueSheets.TryGetValue(cueSheetName, out var reference))
+            if (!cueSheets.TryGetValue(path, out var reference))
             {
-                var loader = new Adx2SoundLoader(assetLoader, cacheDirectory);
-                var cueSheet = await loader.Load(cueSheetName, acbFileName, awbFileName);
+                var cueSheet = await soundLoader.Load(path);
                 if (cueSheet.loaderStatus == CriAtomExAcbLoader.Status.Error)
                 {
-                    Debug.unityLogger.LogError(nameof(Adx2SoundManager), $"Failed to load {cueSheetName}.");
+                    Debug.unityLogger.LogError(nameof(Adx2SoundManager), $"Failed to load {path}.");
                     return null;
                 }
                 
                 reference = new CueSheetData {CueSheet = cueSheet, Count = 0};
-                cueSheets.Add(cueSheetName, reference);
+                cueSheets.Add(path, reference);
             }
             
             reference.Count++;
 
-            var player = playerFactory.Spawn(cueSheetName);
+            var player = playerFactory.Spawn(reference.CueSheet.name);
             players.Add(player);
             return player;
         }
@@ -148,3 +143,4 @@ namespace Gamebase.Sound.Adx2
         #endregion
     }
 }
+#endif

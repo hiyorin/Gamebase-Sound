@@ -9,8 +9,6 @@ namespace Gamebase.Sound.Adx2
     [Serializable]
     public sealed class AcbAssetReference : AssetReferenceT<TextAsset>
     {
-        public string CueName;
-        
         public AcbAssetReference(string guid) : base(guid)
         {
         }

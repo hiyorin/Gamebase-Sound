@@ -4,10 +4,10 @@ using JetBrains.Annotations;
 using UniRx.Async;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Gamebase.Sound.Unity
+namespace Gamebase.Sound.Unity.Internal
 {
     [PublicAPI]
-    public sealed class UnitySoundManager : ISoundManager
+    internal sealed class UnitySoundManager : ISoundManager
     {
         private readonly UnitySoundSource.Pool soundSourceFactory;
 

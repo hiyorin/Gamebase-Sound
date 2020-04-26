@@ -1,4 +1,5 @@
 #if GAMEBASE_ADD_MASTERAUDIO
+using Gamebase.Sound.MasterAudio.Internal;
 using UnityEngine;
 using Zenject;
 using MA = DarkTonic.MasterAudio.MasterAudio;
