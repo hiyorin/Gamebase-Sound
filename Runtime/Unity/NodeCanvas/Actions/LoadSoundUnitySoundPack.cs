@@ -15,7 +15,9 @@ namespace Gamebase.Sound.Unity.NodeCanvas.Actions
         [RequiredField] public UnitySoundPackReference reference = default;
 
         [BlackboardOnly] public BBParameter<ISoundPlayer> saveAs = default;
-        
+
+        protected override string info => $"{base.info} - {reference.editorAsset.name}";
+
         protected override void OnExecute()
         {
             Load().Forget();

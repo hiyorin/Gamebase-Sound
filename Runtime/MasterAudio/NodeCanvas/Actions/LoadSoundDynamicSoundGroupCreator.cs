@@ -15,7 +15,9 @@ namespace Gamebase.Sound.MasterAudio.NodeCanvas.Actions
         [RequiredField] public DynamicSoundGroupCreatorReference reference = default;
 
         [BlackboardOnly] public BBParameter<ISoundPlayer> saveAs = default;
-        
+
+        protected override string info => $"{base.info} - {reference.editorAsset.name}";
+
         protected override void OnExecute()
         {
             Load().Forget();
