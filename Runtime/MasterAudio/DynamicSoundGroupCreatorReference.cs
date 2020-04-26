@@ -1,4 +1,4 @@
-#if GAMEBASE_ADD_MASTERAUDIO
+#if GAMEBASE_ADD_MASTERAUDIO && UNITY_EDITOR
 using System;
 using DarkTonic.MasterAudio;
 using UnityEngine;

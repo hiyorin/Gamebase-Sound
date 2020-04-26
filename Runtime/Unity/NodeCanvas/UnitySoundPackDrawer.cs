@@ -1,11 +1,10 @@
-#if GAMEBASE_ADD_NODECANVAS
-using Gamebase.Sound.Unity;
+#if GAMEBASE_ADD_NODECANVAS && UNITY_EDITOR
 using JetBrains.Annotations;
 using ParadoxNotion.Design;
 using UnityEditor;
 using UnityEngine;
 
-namespace Gamebase.Sound.NodeCanvas
+namespace Gamebase.Sound.Unity.NodeCanvas
 {
     [PublicAPI]
     public sealed class UnitySoundPackDrawer : ObjectDrawer<UnitySoundPackReference>

@@ -1,5 +1,6 @@
 #if GAMEBASE_ADD_ADX2
 using System;
+using Gamebase.Sound.Adx2.Internal;
 using UnityEngine;
 using Zenject;
 

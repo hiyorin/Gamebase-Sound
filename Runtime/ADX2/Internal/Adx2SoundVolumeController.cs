@@ -1,7 +1,7 @@
 #if GAMEBASE_ADD_ADX2
 using JetBrains.Annotations;
 
-namespace Gamebase.Sound.Adx2
+namespace Gamebase.Sound.Adx2.Internal
 {
     [PublicAPI]
     internal sealed class Adx2SoundVolumeController : ISoundVolumeController

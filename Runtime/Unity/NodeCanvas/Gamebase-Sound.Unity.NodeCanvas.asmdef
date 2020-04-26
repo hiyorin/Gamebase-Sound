@@ -1,8 +1,7 @@
 {
-    "name": "Gamebase-Sound.MasterAudio.NodeCanvas",
+    "name": "Gamebase-Sound.Unity.NodeCanvas",
     "references": [
         "Gamebase-Sound",
-        "Gamebase-Sound.MasterAudio",
         "Gamebase-Sound.NodeCanvas",
         "Unity.Addressables",
         "UniRx",
@@ -16,7 +15,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "GAMEBASE_ADD_MASTERAUDIO",
         "GAMEBASE_ADD_NODECANVAS"
     ],
     "versionDefines": [],

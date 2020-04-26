@@ -1,20 +1,20 @@
-#if GAMEBASE_ADD_MASTERAUDIO && GAMEBASE_ADD_NODECANVAS && UNITY_EDITOR
+#if GAMEBASE_ADD_ADX2 && GAMEBASE_ADD_NODECANVAS && UNITY_EDITOR
 using JetBrains.Annotations;
 using ParadoxNotion.Design;
 using UnityEditor;
 using UnityEngine;
 
-namespace Gamebase.Sound.MasterAudio.NodeCanvas
+namespace Gamebase.Sound.Adx2.NodeCanvas
 {
     [PublicAPI]
-    public sealed class DynamicSoundGroupCreatorDrawer : ObjectDrawer<DynamicSoundGroupCreatorReference>
+    public sealed class AcbAssetDrawer : ObjectDrawer<AcbAssetReference>
     {
         private sealed class Dummy : ScriptableObject
         {
-            public DynamicSoundGroupCreatorReference Reference;
+            public AcbAssetReference Reference;
         }
         
-        public override DynamicSoundGroupCreatorReference OnGUI(GUIContent content, DynamicSoundGroupCreatorReference instance)
+        public override AcbAssetReference OnGUI(GUIContent content, AcbAssetReference instance)
         {
             var dummy = ScriptableObject.CreateInstance<Dummy>();
             dummy.Reference = instance;

@@ -1,11 +1,11 @@
 #if GAMEBASE_ADD_NODECANVAS
-using Gamebase.Sound.Unity;
+using Gamebase.Sound.NodeCanvas;
 using JetBrains.Annotations;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UniRx.Async;
 
-namespace Gamebase.Sound.NodeCanvas.Actions
+namespace Gamebase.Sound.Unity.NodeCanvas.Actions
 {
     [PublicAPI]
     [Name("Load Sound (UnitySoundPack)")]
