@@ -1,5 +1,6 @@
 #if GAMEBASE_ADD_ADX2
 using System.Collections.Generic;
+using System.Linq;
 using Gamebase.Loader.Asset;
 using Gamebase.Utilities;
 using JetBrains.Annotations;
@@ -139,7 +140,9 @@ namespace Gamebase.Sound.Adx2.Internal
             players.Remove(player as Adx2SoundPlayer);
             playerFactory.Despawn(player as Adx2SoundPlayer);
         }
-        
+
+        IEnumerable<string> ISoundManager.GetInfos() => cueSheets.Values.Select(x => x.CueSheet.name);
+
         #endregion
     }
 }
