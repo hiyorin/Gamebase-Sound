@@ -7,6 +7,7 @@
         "Unity.Addressables",
         "UniRx",
         "UniRx.Async",
+        "MasterAudio",
         "ParadoxNotion"
     ],
     "includePlatforms": [],
